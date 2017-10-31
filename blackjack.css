@@ -1,0 +1,30 @@
+html {
+  background-color: green;
+  font-family: sans-serif;
+  border: black;
+  border-style: solid;
+}
+
+#title-image {
+  width: 50%;
+  height: 100px;
+  display: block;
+  margin: auto;
+}
+
+ul {
+  padding-left: 25%;
+  color: white;
+  border: black;
+  border-style: solid;
+}
+
+#start-button {
+  padding: 50px;
+  border: black;
+  border-style: solid;
+  margin: auto;
+  display: block;
+  margin-top: 50px;
+  background-image: url("chip.png");
+}

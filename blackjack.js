@@ -1,322 +1,408 @@
+'use strict';
+
 function Blackjack() {
+  // @todo ace with a single value
   this.cards = [{
-      face: 2,
-      type: hearts,
-      value: 2
+      face: 'ace',
+      type: 'clubs',
+      value: 11,
+      image: "imgs/clubs-ace.svg"
     },
     {
-      face: 2,
-      type: clubs,
-      value: 2
+      face: '2',
+      type: 'clubs',
+      value: 2,
+      image: "imgs/clubs-2.svg"
     },
     {
-      face: 2,
-      type: diamonds,
-      value: 2
+      face: '3',
+      type: 'clubs',
+      value: 3,
+      image: "imgs/clubs-3.svg"
     },
     {
-      face: 2,
-      type: spades,
-      value: 2
+      face: '4',
+      type: 'clubs',
+      value: 4,
+      image: "imgs/clubs-4.svg"
     },
     {
-      face: 3,
-      type: hearts,
-      value: 3
+      face: '5',
+      type: 'clubs',
+      value: 5,
+      image: "imgs/clubs-5.svg"
     },
     {
-      face: 3,
-      type: clubs,
-      value: 3
+      face: '6',
+      type: 'clubs',
+      value: 6,
+      image: "imgs/clubs-6.svg"
     },
     {
-      face: 3,
-      type: diamonds,
-      value: 3
+      face: '7',
+      type: 'clubs',
+      value: 7,
+      image: "imgs/clubs-7.svg"
     },
     {
-      face: 3,
-      type: spades,
-      value: 3
+      face: '8',
+      type: 'clubs',
+      value: 8,
+      image: "imgs/clubs-8.svg"
     },
     {
-      face: 4,
-      type: hearts,
-      value: 4
+      face: '9',
+      type: 'clubs',
+      value: 9,
+      image: "imgs/clubs-9.svg"
     },
     {
-      face: 4,
-      type: clubs,
-      value: 4
+      face: '10',
+      type: 'clubs',
+      value: 10,
+      image: "imgs/clubs-10.svg"
     },
     {
-      face: 4,
-      type: diamonds,
-      value: 4
+      face: 'jack',
+      type: 'clubs',
+      value: 10,
+      image: "imgs/clubs-jack.svg"
     },
     {
-      face: 4,
-      type: spades,
-      value: 4
+      face: 'queen',
+      type: 'clubs',
+      value: 10,
+      image: "imgs/clubs-queen.svg"
     },
     {
-      face: 5,
-      type: hearts,
-      value: 5
+      face: 'king',
+      type: 'clubs',
+      value: 10,
+      image: "imgs/clubs-king.svg"
     },
     {
-      face: 5,
-      type: clubs,
-      value: 5
+      face: 'ace',
+      type: 'diamonds',
+      value: 11,
+      image: "imgs/diamonds-ace.svg"
     },
     {
-      face: 5,
-      type: diamonds,
-      value: 5
+      face: '2',
+      type: 'diamonds',
+      value: 2,
+      image: "imgs/diamonds-2.svg"
     },
     {
-      face: 5,
-      type: spades,
-      value: 5
+      face: '3',
+      type: 'diamonds',
+      value: 3,
+      image: "imgs/diamonds-3.svg"
     },
     {
-      face: 6,
-      type: hearts,
-      value: 6
+      face: '4',
+      type: 'diamonds',
+      value: 4,
+      image: "imgs/diamonds-4.svg"
     },
     {
-      face: 6,
-      type: clubs,
-      value: 6
+      face: '5',
+      type: 'diamonds',
+      value: 5,
+      image: "imgs/diamonds-5.svg"
     },
     {
-      face: 6,
-      type: diamonds,
-      value: 6
+      face: '6',
+      type: 'diamonds',
+      value: 6,
+      image: "imgs/diamonds-6.svg"
     },
     {
-      face: 6,
-      type: spades,
-      value: 6
+      face: '7',
+      type: 'diamonds',
+      value: 7,
+      image: "imgs/diamonds-7.svg"
     },
     {
-      face: 7,
-      type: hearts,
-      value: 7
+      face: '8',
+      type: 'diamonds',
+      value: 8,
+      image: "imgs/diamonds-8.svg"
     },
     {
-      face: 7,
-      type: clubs,
-      value: 7
+      face: '9',
+      type: 'diamonds',
+      value: 9,
+      image: "imgs/diamonds-9.svg"
     },
     {
-      face: 7,
-      type: diamonds,
-      value: 7
+      face: '10',
+      type: 'diamonds',
+      value: 10,
+      image: "imgs/diamonds-10.svg"
     },
     {
-      face: 7,
-      type: spades,
-      value: 7
-    },
-    {
-      face: 8,
-      type: hearts,
-      value: 8
-    },
-    {
-      face: 8,
-      type: clubs,
-      value: 8
-    },
-    {
-      face: 8,
-      type: diamonds,
-      value: 8
-    },
-    {
-      face: 8,
-      type: spades,
-      value: 8
-    },
-    {
-      face: 9,
-      type: hearts,
-      value: 9
-    },
-    {
-      face: 9,
-      type: clubs,
-      value: 9
-    },
-    {
-      face: 9,
-      type: diamonds,
-      value: 9
-    },
-    {
-      face: 9,
-      type: spades,
-      value: 9
-    },
-    {
-      face: 10,
-      type: hearts,
-      value: 10
-    },
-    {
-      face: 10,
-      type: clubs,
-      value: 10
-    },
-    {
-      face: 10,
-      type: diamonds,
-      value: 10
-    },
-    {
-      face: 10,
-      type: spades,
-      value: 10
+      face: 'jack',
+      type: 'diamonds',
+      value: 10,
+      image: "imgs/diamonds-jack.svg"
     },
 
     {
-      face: jack,
-      type: hearts,
-      value: 10
+      face: 'queen',
+      type: 'diamonds',
+      value: 10,
+      image: "imgs/diamonds-queen.svg"
     },
     {
-      face: jack,
-      type: clubs,
-      value: 10
+      face: 'king',
+      type: 'diamonds',
+      value: 10,
+      image: "imgs/diamonds-king.svg"
     },
     {
-      face: jack,
-      type: diamonds,
-      value: 10
+      face: 'ace',
+      type: 'hearts',
+      value: 11,
+      image: "imgs/hearts-ace.svg"
     },
     {
-      face: jack,
-      type: spades,
-      value: 10
+      face: '2',
+      type: 'hearts',
+      value: 2,
+      image: "imgs/hearts-2.svg"
     },
+    {
+      face: '3',
+      type: 'hearts',
+      value: 3,
+      image: "imgs/hearts-3.svg"
+    },
+    {
+      face: '4',
+      type: 'hearts',
+      value: 4,
+      image: "imgs/hearts-4.svg"
+    },
+    {
+      face: '5',
+      type: 'hearts',
+      value: 5,
+      image: "imgs/hearts-5.svg"
+    },
+    {
+      face: '6',
+      type: 'hearts',
+      value: 6,
+      image: "imgs/hearts-6.svg"
+    },
+    {
+      face: '7',
+      type: 'hearts',
+      value: 7,
+      image: "imgs/hearts-7.svg"
+    },
+    {
+      face: '8',
+      type: 'hearts',
+      value: 8,
+      image: "imgs/hearts-8.svg"
+    },
+    {
+      face: '9',
+      type: 'hearts',
+      value: 9,
+      image: "imgs/hearts-9.svg"
+    },
+    {
+      face: '10',
+      type: 'hearts',
+      value: 10,
+      image: "imgs/hearts-10.svg"
 
-    {
-      face: queen,
-      type: hearts,
-      value: 10
     },
     {
-      face: queen,
-      type: clubs,
-      value: 10
+      face: 'jack',
+      type: 'hearts',
+      value: 10,
+      image: "imgs/hearts-jack.svg"
     },
     {
-      face: queen,
-      type: diamonds,
-      value: 10
+      face: 'queen',
+      type: 'hearts',
+      value: 10,
+      image: "imgs/hearts-queen.svg"
     },
     {
-      face: queen,
-      type: spades,
-      value: 10
+      face: 'king',
+      type: 'hearts',
+      value: 10,
+      image: "imgs/hearts-king.svg"
     },
+    {
+      face: 'ace',
+      type: 'spades',
+      value: 11,
+      image: "imgs/spades-ace.svg"
 
-    {
-      face: queen,
-      type: hearts,
-      value: 10
     },
     {
-      face: queen,
-      type: clubs,
-      value: 10
+      face: '2',
+      type: 'spades',
+      value: 2,
+      image: "imgs/spades-2.svg"
     },
     {
-      face: queen,
-      type: diamonds,
-      value: 10
+      face: '3',
+      type: 'spades',
+      value: 3,
+      image: "imgs/spades-3.svg"
     },
     {
-      face: queen,
-      type: spades,
-      value: 10
+      face: '4',
+      type: 'spades',
+      value: 4,
+      image: "imgs/spades-4.svg"
+    },
+    {
+      face: '5',
+      type: 'spades',
+      value: 5,
+      image: "imgs/spades-5.svg"
+    },
+    {
+      face: '6',
+      type: 'spades',
+      value: 6,
+      image: "imgs/spades-6.svg"
+    },
+    {
+      face: '7',
+      type: 'spades',
+      value: 7,
+      image: "imgs/spades-7.svg"
+    },
+    {
+      face: '8',
+      type: 'spades',
+      value: 8,
+      image: "imgs/spades-8.svg"
+    },
+    {
+      face: '9',
+      type: 'spades',
+      value: 9,
+      image: "imgs/spades-9.svg"
+    },
+    {
+      face: '10',
+      type: 'spades',
+      value: 10,
+      image: "imgs/spades-10.svg"
+    },
+    {
+      face: 'jack',
+      type: 'spades',
+      value: 10,
+      image: "imgs/spades-jack.svg"
+    },
+    {
+      face: 'queen',
+      type: 'spades',
+      value: 10,
+      image: "imgs/spades-queen.svg"
+    },
+    {
+      face: 'king',
+      type: 'spades',
+      value: 10,
+      image: "imgs/spades-king.svg"
     }
   ];
+  this.dealerCards = [];
   this.dealerHand = [];
-  this.dealerHandTotal = this.dealerHand[0] + this.dealerHand[1];
+  this.playerCards = [];
   this.playerHand = [];
-  this.dealerHandTotal = this.playerHand[0] + this.playerHand[1];
-  this.bet = 0;
+  this.playerBet = 0;
   this.playerChips = 5000;
+  this.totalDealerCount = 0;
+  this.totalPlayerCount = 0;
   this.playerProfit = this.playerChips - 5000;
 }
 
 Blackjack.prototype.randomizer = function() {
-  Math.floor(Math.random() * this.cards.length);
-};
-// SHUFFLE, DEAL AND BET
-Blackjack.prototype._shuffleCards = function() {
-  var i = 0;
-  var j = 0;
-  var temp = null;
-  for (i = this.cards.length - 1; i > 0; i -= 1) {
-    j = Math.floor(Math.random() * (i + 1));
-    temp = this.cards[i];
-    this.cards[i] = this.cards[j];
-    this.cards[j] = temp;
-  }
+  return Math.floor(Math.random() * this.cards.length);
 };
 
 Blackjack.prototype.bet = function() {
-  return this.bet + 5;
+  this.playerBet += 5;
 };
-
 
 Blackjack.prototype.deal = function() {
-  this.dealerHand.push(this.cards.value[randomizer()]);
-  this.dealerHand.push(this.cards.value[randomizer()]);
-  this.playerHand.push(this.cards.value[randomizer()]);
-  this.playerHand.push(this.cards.value[randomizer()]);
+  this.dealerHit();
+  this.playerHit();
+  this.playerHit();
+
 };
 
+Blackjack.prototype.calcDealerTotal = function() {
+
+  this.totalDealerCount = this.dealerHand.reduce(function(sum, value) {
+    return sum + value;
+  }, 0);
+};
+
+Blackjack.prototype.calcPlayerTotal = function() {
+
+  this.totalPlayerCount = this.playerHand.reduce(function(sum, value) {
+    return sum + value;
+  }, 0);
+};
 
 Blackjack.prototype.playerHit = function() {
-  this.playerHand.push(this.cards.value[randomizer()]);
+  var random = this.randomizer();
+  this.playerHand.push(this.cards[random].value);
+  this.playerCards.push(this.cards[random].image);
+  this.calcPlayerTotal();
 };
 
 Blackjack.prototype.double = function() {
-  return this.bet * 2;
+  this.playerBet = this.playerBet * 2;
+  this.playerHit();
+
 };
 
 Blackjack.prototype.playerStand = function() {
-  dealerPlay();
+  this.dealerPlay();
 };
 
 Blackjack.prototype.dealerHit = function() {
-  this.dealerHand.push(this.cards.value[randomizer()]);
-};
+  var random = this.randomizer();
+  this.dealerHand.push(this.cards[random].value);
+  this.dealerCards.push(this.cards[random].image);
 
+  this.calcDealerTotal();
+};
 
 Blackjack.prototype.dealerStand = function() {
-  checkWinner();
+  this.checkWinner();
 };
 
-
 Blackjack.prototype.dealerPlay = function() {
-  if (this.dealerHandTotal <= 16) {
-    dealerHit();
-  } else {
-    dealerStand();
+  while (this.totalDealerCount <= 16) {
+    if (this.totalDealerCount <= 16) {
+      this.dealerHit();
+    } else {
+      this.dealerStand();
+    }
   }
 };
 
 Blackjack.prototype.checkWinner = function() {
-  if (this.dealerHandTotal > this.playerHandTotal || this.playerHandTotal > 21) {
-    this.playerChips -= this.bet;
-  } else if (this.dealerHandTotal < this.playerHandTotal || this.dealerHandTotal > 21) {
-    this.playerChips += this.bet;
+  if (this.totalDealerCount > this.totalPlayerCount || this.totalPlayerCount > 21) {
+    this.playerChips -= this.playerBet;
+  } else if (this.totalDealerCount < this.playerHand || this.totalDealerCount > 21) {
+    this.playerChips += this.playerBet;
   } else if (this.playerHand[0] + this.playerHand[1] === 21) {
-    this.playerChips += this.bet * 1.5;
+    this.playerChips += this.playerBet * 1.5;
   } //write condition on a tie
 };

@@ -1,5 +1,10 @@
 'use strict';
 
+
+const PLAYER_CARDS_DELAY = 1000;
+const CARD_DELAY = 250;
+const BUST_OR_WIN_SCREEN = 2000;
+
 function App(container) {
   var self = this;
   self.blackjack = new Blackjack();
@@ -22,6 +27,30 @@ App.prototype.buildIntro = function() {
 
   self.intro = document.createElement('div');
   self.intro.id = 'intro';
+
+  var titleImage = document.createElement('img');
+  titleImage.id = 'title-image';
+  self.intro.appendChild(titleImage);
+
+  var rulesList = document.createElement('ul');
+  rulesList.id = ('rules');
+  self.intro.appendChild(rulesList);
+
+  self.rulesTitle = document.createElement('h2');
+  self.rulesTitle.innerText = " House Rules: ";
+  rulesList.appendChild(self.rulesTitle);
+
+  self.li1 = document.createElement('li');
+  self.li1.innerText = "Blackjack pays 3 to 2";
+  rulesList.appendChild(self.li1);
+
+  self.li2 = document.createElement('li');
+  self.li2.innerText = "Dealer stands at 17";
+  rulesList.appendChild(self.li2);
+
+  self.li3 = document.createElement('li');
+  self.li3.innerText = "Dealer must draw to 16";
+  rulesList.appendChild(self.li3);
 
   var startButton = document.createElement('button');
   startButton.id = "start-button";
@@ -77,7 +106,7 @@ App.prototype.buildBet = function() {
 
   var dealButton = document.createElement('button');
   dealButton.id = "deal-button";
-  dealButton.innerText = "click here to deal!";
+  dealButton.innerText = "deal!";
   self.bet.appendChild(dealButton);
 
   var statsDiv = document.createElement('div');
@@ -115,28 +144,53 @@ App.prototype.buildBet = function() {
 
 //// FUNCTIONS FOR BUILDING THE GAME
 
+App.prototype.addDealerCardToDOM = function(card, index, currentCardCount) {
+  var self = this;
+
+  var imgDom = document.createElement('img');
+  imgDom.setAttribute('src', card);
+  imgDom.setAttribute('class', 'card');
+  self.dealerCards.appendChild(imgDom);
+  if (index >= currentCardCount) {
+    imgDom.classList.add('new-card');
+    window.setTimeout(function() {
+      imgDom.classList.remove('new-card');
+    }, 1 + (1 + index - currentCardCount) * CARD_DELAY);
+  }
+};
+
 App.prototype.addDealerCardsToDOM = function() {
   var self = this;
+  var currentCardCount = self.dealerCards.children.length;
+  //remove the previous cards
   self.removePreviousDealerCards();
-  self.blackjack.dealerCards.forEach(function(card) {
-    var imgDom = document.createElement('img');
-    imgDom.setAttribute('src', card);
-    imgDom.setAttribute('class', 'dealer-cards');
-    self.dealerCards.appendChild(imgDom);
-
+  self.blackjack.dealerCards.forEach(function(card, index) {
+    self.addDealerCardToDOM(card, index, currentCardCount);
   });
+};
+
+App.prototype.addPlayerCardToDOM = function(card, index, currentCardCount) {
+  var self = this;
+
+  var imgDom = document.createElement('img');
+  imgDom.setAttribute('src', card);
+  imgDom.setAttribute('class', 'card');
+  self.playerCards.appendChild(imgDom);
+  if (index >= currentCardCount) {
+    imgDom.classList.add('new-card');
+    window.setTimeout(function() {
+      imgDom.classList.remove('new-card');
+    }, 1 + (1 + index - currentCardCount) * CARD_DELAY);
+  }
 };
 
 App.prototype.addPlayerCardsToDOM = function() {
   var self = this;
+  var currentCardCount = self.playerCards.children.length;
   //remove the previous cards
   self.removePreviousPlayerCards();
-  self.blackjack.playerCards.forEach(function(card) {
-    var imgDom = document.createElement('img');
-    imgDom.setAttribute('src', card);
-    imgDom.setAttribute('class', 'player-cards');
-    self.playerCards.appendChild(imgDom);
-
+  self.blackjack.playerCards.forEach(function(card, index) {
+    self.addPlayerCardToDOM(card, index, currentCardCount);
   });
 };
 
@@ -158,11 +212,8 @@ App.prototype.removePreviousDealerCards = function() {
 
 App.prototype.dealerBust = function() {
   var self = this;
-  if (self.totalDealerCount > 21) {
+  if (self.blackjack.totalDealerCount > 21) {
     this.playerChips += this.playerBet;
-
-
-
   }
   self.profit.innerText = "profit: " + self.blackjack.playerProfit;
   self.cash.innerText = "cash: " + self.blackjack.playerChips;
@@ -172,18 +223,20 @@ App.prototype.dealerBust = function() {
 
 App.prototype.playerBust = function() {
   var self = this;
-  if (self.totalDealerCount > 21) {
+  if (self.blackjack.totalPlayerCount > 21) {
     this.playerChips -= this.playerBet;
   }
   self.profit.innerText = "profit: " + self.blackjack.playerProfit;
   self.cash.innerText = "cash: " + self.blackjack.playerChips;
-  self.dealAndPlay.remove();
-  self.playerBustScreen();
+  window.setTimeout(function() {
+    self.dealAndPlay.remove();
+    self.playerBustScreen();
+  }, BUST_OR_WIN_SCREEN);
 };
 
 App.prototype.dealerWins = function() {
   var self = this;
-  if (self.totalDealerCount > self.totalPlayerCount) {
+  if (self.blackjack.totalDealerCount > self.blackjack.totalPlayerCount) {
     this.playerChips -= this.playerBet;
   }
   self.profit.innerText = "profit: " + self.blackjack.playerProfit;
@@ -194,7 +247,7 @@ App.prototype.dealerWins = function() {
 
 App.prototype.playerWins = function() {
   var self = this;
-  if (self.totalDealerCount < self.totalPlayerCount) {
+  if (self.blackjack.totalDealerCount < self.blackjack.totalPlayerCount) {
     this.playerChips += this.playerBet;
 
   }
@@ -207,10 +260,12 @@ App.prototype.playerWins = function() {
 
 
 
+
+
+
+
+
 ////BUILD GAME
-
-
-
 
 App.prototype.buildGame = function() {
   var self = this;
@@ -250,7 +305,9 @@ App.prototype.buildGame = function() {
 
   self.playerCards = document.createElement('div');
   self.playerCards.classList.add("player-cards");
-  self.addPlayerCardsToDOM();
+  window.setTimeout(function() {
+    self.addPlayerCardsToDOM();
+  }, PLAYER_CARDS_DELAY);
   self.dealAndPlay.appendChild(self.playerCards);
 
 
@@ -277,6 +334,9 @@ App.prototype.buildGame = function() {
     self.blackjack.playerHit();
     self.addPlayerCardsToDOM();
     self.playerCount.innerText = "count:" + self.blackjack.totalPlayerCount;
+    if (self.blackjack.totalPlayerCount > 21) {
+      self.playerBust();
+    }
   });
 
   self.btnStand = document.createElement('button');

@@ -41,12 +41,8 @@ ul {
 }
 
 #start-button {
-  padding: 50px;
-  border: black;
-  border-style: solid;
   margin: auto;
   display: block;
-  margin-top: 50px;
   /*background-image: url("chip.png");*/
 }
 
@@ -120,4 +116,14 @@ ul {
 .card {
   width: 100px;
   height: 150px;
+  position: relative;
+  top: 0;
+  opacity: 1;
+  transform: scale(1);
+  transition: top 1s, opacity 0.5s;
+}
+
+.new-card {
+  opacity: 0.1;
+  top: -40vh;
 }

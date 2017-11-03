@@ -5,6 +5,7 @@
   "globals": {
     "console": true,
     "document": true,
+    "window": true,
     "Blackjack": true
 
   }

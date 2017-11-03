@@ -7,8 +7,8 @@ html {
 }
 
 html {
-  background-color: green;
-  font-family: sans-serif;
+  background-color: rgb(25, 77, 30);
+  font-family: Latin Modern Mono Light;
   border: black;
   border: 2px solid black;
   height: 100%;
@@ -26,24 +26,97 @@ body {
 
 /*Intro-start game*/
 
+#intro {
+  background-image: url("las-vegas.jpg");
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 #title-image {
   width: 50%;
   height: 100px;
   display: block;
   margin: auto;
+  flex: 1;
 }
 
 ul {
-  padding-left: 25%;
-  color: white;
-  border: black;
-  border-style: solid;
+  padding-left: 30%;
+  color: rgb(234, 255, 129);
+  flex: 2;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+#button-div {
+  flex: 2;
 }
 
 #start-button {
   margin: auto;
   display: block;
-  /*background-image: url("chip.png");*/
+  color: red;
+  border: 2px solid black;
+  font-size: 25px;
+  border-radius: 50%;
+  height: 150px;
+  width: 150px;
+  border: dashed red 10px;
+  box-shadow: 10px 10px 50px red;
+}
+
+/*BET*/
+
+#bet {
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+  justify-content: space-around;
+}
+
+#bet h6 {
+  font-size: 2rem;
+  line-height: 2.5;
+  font-weight: bold;
+  color: rgba(255, 0, 0, 0.78);
+  margin: 0;
+}
+
+#bet .stats {
+  display: flex;
+  justify-content: center;
+  flex-direction: column-reverse;
+  align-items: center;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+#bet-button {
+  color: red;
+  border: 2px solid black;
+  font-size: 25px;
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
+  border: dashed red 10px;
+  box-shadow: 10px 10px 50px red;
+}
+
+#deal-button {
+  color: red;
+  border: 2px solid black;
+  font-size: 25px;
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
+  border: dashed yellow 10px;
+  box-shadow: 10px 10px 50px yellow;
 }
 
 /*Deal n play */
@@ -68,11 +141,13 @@ ul {
 .dealer-count {
   flex: 1;
   text-align: center;
+  font-size: 18px;
 }
 
 .player-count {
   flex: 1;
   text-align: center;
+  font-size: 18px;
 }
 
 .player-cards {
@@ -85,10 +160,46 @@ ul {
 }
 
 .player-actions {
-  flex: 1;
+  flex: 1.5;
   padding: 20px;
   display: flex;
   justify-content: space-around;
+}
+
+#button-hit {
+  color: blue;
+  border: 2px solid black;
+  font-size: 25px;
+  border-radius: 50%;
+  height: 70px;
+  width: 70px;
+  border: dashed blue 10px;
+  box-shadow: 10px 10px 50px blue;
+  font-size: 15px;
+}
+
+#button-double {
+  color: red;
+  border: 2px solid black;
+  font-size: 25px;
+  border-radius: 50%;
+  height: 70px;
+  width: 77px;
+  font-size: 15px;
+  border: dashed red 10px;
+  box-shadow: 10px 10px 50px red;
+}
+
+#button-stand {
+  color: green;
+  border: 2px solid black;
+  font-size: 25px;
+  border-radius: 50%;
+  height: 70px;
+  width: 70px;
+  border: dashed yellow 10px;
+  box-shadow: 10px 10px 50px yellow;
+  font-size: 15px;
 }
 
 .stats {

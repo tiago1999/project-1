@@ -52,11 +52,15 @@ App.prototype.buildIntro = function() {
   self.li3.innerText = "Dealer must draw to 16";
   rulesList.appendChild(self.li3);
 
+  self.buttonDiv = document.createElement('div');
+  self.buttonDiv.id = 'button-div';
+  self.intro.appendChild(self.buttonDiv);
+
   var startButton = document.createElement('button');
   startButton.id = "start-button";
   startButton.innerText = "Beat the House";
 
-  self.intro.appendChild(startButton);
+  self.buttonDiv.appendChild(startButton);
 
   // <div id="intro">
   //   <!-- <img id="title-image" src="project-Blackjack/blackjack-title.png"> -->
@@ -93,36 +97,40 @@ App.prototype.buildBet = function() {
   self.bet = document.createElement('div');
   self.bet.id = 'bet';
 
+  self.buttons = document.createElement('div');
+  self.buttons.classList.add('buttons');
+  self.bet.appendChild(self.buttons);
+
   var betButton = document.createElement('button');
   betButton.id = "bet-button";
-  betButton.innerText = "click here to bet!";
+  betButton.innerText = "bet!";
   betButton.addEventListener('click', function() {
     console.log("bet button clicked");
     self.blackjack.bet();
-    self.currentBet.innerText = "current bet: " + self.blackjack.playerBet;
+    self.currentBet.innerText = "current bet: $" + self.blackjack.playerBet;
   });
 
-  self.bet.appendChild(betButton);
+  self.buttons.appendChild(betButton);
 
   var dealButton = document.createElement('button');
   dealButton.id = "deal-button";
   dealButton.innerText = "deal!";
-  self.bet.appendChild(dealButton);
+  self.buttons.appendChild(dealButton);
 
   var statsDiv = document.createElement('div');
   statsDiv.classList.add("stats");
   self.bet.appendChild(statsDiv);
 
   self.cash = document.createElement('h6');
-  self.cash.innerText = "cash: " + self.blackjack.playerChips;
+  self.cash.innerText = "cash: $" + self.blackjack.playerChips;
   statsDiv.appendChild(self.cash);
 
   self.profit = document.createElement('h6');
-  self.profit.innerText = "profit: " + self.blackjack.playerProfit;
+  self.profit.innerText = "profit: $" + self.blackjack.playerProfit;
   statsDiv.appendChild(self.profit);
 
   self.currentBet = document.createElement('h6');
-  self.currentBet.innerText = "current bet: " + self.blackjack.playerBet;
+  self.currentBet.innerText = "current bet: $" + self.blackjack.playerBet;
   statsDiv.appendChild(self.currentBet);
 
 
@@ -212,49 +220,80 @@ App.prototype.removePreviousDealerCards = function() {
 
 App.prototype.dealerBust = function() {
   var self = this;
-  if (self.blackjack.totalDealerCount > 21) {
-    this.playerChips += this.playerBet;
-  }
-  self.profit.innerText = "profit: " + self.blackjack.playerProfit;
+  // if (self.blackjack.totalDealerCount > 21) {
+  //   self.blackjack.playerChips += self.blackjack.playerBet;
+  // }
+  self.profit.innerText = "profit: $" + self.blackjack.playerProfit;
   self.cash.innerText = "cash: " + self.blackjack.playerChips;
-  self.dealAndPlay.remove();
-  self.dealerBustScreen();
+  window.setTimeout(function() {
+    self.testDealerBust();
+  }, BUST_OR_WIN_SCREEN);
 };
 
 App.prototype.playerBust = function() {
   var self = this;
-  if (self.blackjack.totalPlayerCount > 21) {
-    this.playerChips -= this.playerBet;
-  }
-  self.profit.innerText = "profit: " + self.blackjack.playerProfit;
-  self.cash.innerText = "cash: " + self.blackjack.playerChips;
+  // if (self.blackjack.totalPlayerCount > 21) {
+  //   self.blackjack.playerChips -= self.blackjack.playerBet;
+  // }
+  self.profit.innerText = "profit: $" + self.blackjack.playerProfit;
+  self.cash.innerText = "cash: $" + self.blackjack.playerChips;
   window.setTimeout(function() {
-    self.dealAndPlay.remove();
-    self.playerBustScreen();
+    self.testPlayerBust();
   }, BUST_OR_WIN_SCREEN);
 };
 
 App.prototype.dealerWins = function() {
   var self = this;
-  if (self.blackjack.totalDealerCount > self.blackjack.totalPlayerCount) {
-    this.playerChips -= this.playerBet;
-  }
-  self.profit.innerText = "profit: " + self.blackjack.playerProfit;
-  self.cash.innerText = "cash: " + self.blackjack.playerChips;
+  // if (self.blackjack.totalDealerCount > self.blackjack.totalPlayerCount) {
+  //   self.blackjack.playerChips -= self.blackjack.playerBet;
+  // }
+  self.profit.innerText = "profit: $" + self.blackjack.playerProfit;
+  self.cash.innerText = "cash: $" + self.blackjack.playerChips;
+  window.setTimeout(function() {
+    self.testDealerWins();
+  }, BUST_OR_WIN_SCREEN);
+};
+
+App.prototype.testDealerWins = function() {
+  var self = this;
   self.dealAndPlay.remove();
   self.dealerWinsScreen();
 };
 
-App.prototype.playerWins = function() {
+App.prototype.testPlayerBust = function() {
   var self = this;
-  if (self.blackjack.totalDealerCount < self.blackjack.totalPlayerCount) {
-    this.playerChips += this.playerBet;
+  self.dealAndPlay.remove();
+  self.playerBustScreen();
+};
 
-  }
-  self.profit.innerText = "profit: " + self.blackjack.playerProfit;
-  self.cash.innerText = "cash: " + self.blackjack.playerChips;
+App.prototype.testPlayerWins = function() {
+  var self = this;
   self.dealAndPlay.remove();
   self.playerWinsScreen();
+};
+
+App.prototype.testDealerBust = function() {
+  var self = this;
+  self.dealAndPlay.remove();
+  self.dealerBustScreen();
+};
+
+App.prototype.playerWins = function() {
+  var self = this;
+  self.blackjack.playerChips += self.blackjack.playerBet;
+  self.profit.innerText = "profit: $" + self.blackjack.playerProfit;
+  self.cash.innerText = "cash: $" + self.blackjack.playerChips;
+  window.setTimeout(function() {
+    self.testPlayerWins();
+  }, BUST_OR_WIN_SCREEN);
+};
+
+App.prototype.tie = function() {
+  var self = this;
+  window.setTimeout(function() {
+    self.dealAndPlay.remove();
+    self.tieScreen();
+  });
 };
 
 
@@ -318,34 +357,80 @@ App.prototype.buildGame = function() {
   self.dealAndPlay.appendChild(playerActionsDiv);
 
   self.btnDouble = document.createElement('button');
+  self.btnDouble.id = "button-double";
   self.btnDouble.innerText = 'Double';
   self.btnDouble.addEventListener('click', function() {
     console.log("double button clicked");
     self.addPlayerCardsToDOM();
     self.blackjack.double();
     self.playerCount.innerText = "count:" + self.blackjack.totalPlayerCount;
+    self.currentBet.innerText = "current bet: $" + self.blackjack.playerBet;
 
+
+    if (self.blackjack.totalPlayerCount > 21) {
+      self.playerBust();
+    }
+    if (self.blackjack.totalDealerCount < self.blackjack.totalPlayerCount) {
+      self.playerWins();
+    }
+    if (self.blackjack.totalDealerCount > self.blackjack.totalPlayerCount) {
+      self.dealerWins();
+    }
+    if (self.blackjack.totalDealerCount > 21) {
+      self.blackjack.playerChips += self.blackjack.playerBet;
+    }
+    if (self.blackjack.totalDealerCount > 21) {
+      self.dealerBust();
+    }
   });
 
   self.btnHit = document.createElement('button');
+  self.btnHit.id = "button-hit";
   self.btnHit.innerText = 'Hit';
   self.btnHit.addEventListener('click', function() {
     console.log('hit button clicked');
     self.blackjack.playerHit();
     self.addPlayerCardsToDOM();
     self.playerCount.innerText = "count:" + self.blackjack.totalPlayerCount;
+
+
     if (self.blackjack.totalPlayerCount > 21) {
       self.playerBust();
+    }
+    if (self.blackjack.totalDealerCount < self.blackjack.totalPlayerCount) {
+      self.playerWins();
+    }
+    if (self.blackjack.totalDealerCount > self.blackjack.totalPlayerCount) {
+      self.dealerWins();
+    }
+    if (self.blackjack.totalDealerCount > 21) {
+      self.blackjack.playerChips += self.blackjack.playerBet;
+    }
+    if (self.blackjack.totalDealerCount > 21) {
+      self.dealerBust();
     }
   });
 
   self.btnStand = document.createElement('button');
+  self.btnStand.id = "button-stand";
   self.btnStand.innerText = 'Stand';
   self.btnStand.addEventListener('click', function() {
     console.log('stand button clicked');
     self.blackjack.playerStand();
     self.addDealerCardsToDOM();
     self.dealerCount.innerText = "count:" + self.blackjack.totalDealerCount;
+
+    if (self.blackjack.totalPlayerCount > 21) {
+      self.playerBust();
+    } else if (self.blackjack.totalDealerCount < self.blackjack.totalPlayerCount && self.blackjack.totalPlayerCount < 21) {
+      self.playerWins();
+    } else if (self.blackjack.totalDealerCount > self.blackjack.totalPlayerCount && self.blackjack.totalDealerCount < 21) {
+      self.dealerWins();
+    } else if (self.blackjack.totalDealerCount > 21) {
+      self.dealerBust();
+    } else {
+      self.tie();
+    }
 
   });
 
@@ -361,15 +446,15 @@ App.prototype.buildGame = function() {
   self.dealAndPlay.appendChild(statsDiv);
 
   self.cash = document.createElement('h6');
-  self.cash.innerText = "cash: " + self.blackjack.playerChips;
+  self.cash.innerText = "cash: $" + self.blackjack.playerChips;
   statsDiv.appendChild(self.cash);
 
   self.profit = document.createElement('h6');
-  self.profit.innerText = "profit: " + self.blackjack.playerProfit;
+  self.profit.innerText = "profit: $" + self.blackjack.playerProfit;
   statsDiv.appendChild(self.profit);
 
   self.currentBet = document.createElement('h6');
-  self.currentBet.innerText = "current bet: " + self.blackjack.playerBet;
+  self.currentBet.innerText = "current bet: $" + self.blackjack.playerBet;
   statsDiv.appendChild(self.currentBet);
 
 
@@ -390,33 +475,37 @@ App.prototype.buildGame = function() {
 
 App.prototype.dealerBustScreen = function() {
   var self = this;
+
   self.dBust = document.createElement('div');
   self.dBust.id = 'dealer-bust';
 
 
   self.winner = document.createElement('div');
-  self.winner.classList.add("winner");
+  self.winner.id = "winner";
   self.dBust.appendChild(self.winner);
 
-  var winnerText = document.createElement('h6');
-  self.winnerText.innerText = "D-BUST!!!";
-  self.winner.appendChild(winnerText);
+  self.winnerText = document.createElement('h6');
+  self.self.winnerText.innerText = "D-BUST!!!";
+  self.winner.appendChild(self.winnerText);
 
   self.restart = document.createElement('div');
-  self.restart.classList.add("restart-button");
+  self.restart.id = "restart-button";
   self.dBust.appendChild(self.restart);
 
   var restartButton = document.createElement('button');
-  restartButton.id = "restart-button";
   restartButton.innerText = "play again!";
-  self.dBust.appendChild(restartButton);
+  self.restart.appendChild(restartButton);
 
-  restartButton.addEventListener('click', function() {
+  self.restartButton.addEventListener('click', function() {
     self.dBust.remove();
     self.buildGame();
   });
-
+  self.container.appendChild(self.dBust);
 };
+
+
+
+
 
 App.prototype.playerBustScreen = function() {
   var self = this;
@@ -425,19 +514,18 @@ App.prototype.playerBustScreen = function() {
 
 
   self.winner = document.createElement('div');
-  self.winner.classList.add("winner");
+  self.winner.id = "winner";
   self.pBust.appendChild(self.winner);
 
-  var winnerText = document.createElement('h6');
+  self.winnerText = document.createElement('h6');
   self.winnerText.innerText = "PLAYER BUST!!!";
-  self.winner.appendChild(winnerText);
+  self.winner.appendChild(self.winnerText);
 
   self.restart = document.createElement('div');
-  self.restart.classList.add("restart-button");
+  self.restart.id = "restart-button";
   self.pBust.appendChild(self.restart);
 
   var restartButton = document.createElement('button');
-  restartButton.id = "restart-button";
   restartButton.innerText = "play again!";
   self.restart.appendChild(restartButton);
 
@@ -445,6 +533,7 @@ App.prototype.playerBustScreen = function() {
     self.pBust.remove();
     self.buildGame();
   });
+  self.container.appendChild(self.pBust);
 };
 
 
@@ -456,19 +545,18 @@ App.prototype.playerWinsScreen = function() {
 
 
   self.winner = document.createElement('div');
-  self.winner.classList.add("winner");
+  self.winner.id = "winner";
   self.playerWins.appendChild(self.winner);
 
-  var winnerText = document.createElement('h6');
+  self.winnerText = document.createElement('h6');
   self.winnerText.innerText = "PLAYER WINS!!!";
-  self.winner.appendChild(winnerText);
+  self.winner.appendChild(self.winnerText);
 
   self.restart = document.createElement('div');
-  self.restart.classList.add("restart-button");
+  self.restart.id = "restart-button";
   self.playerWins.appendChild(self.restart);
 
   var restartButton = document.createElement('button');
-  restartButton.id = "restart-button";
   restartButton.innerText = "play again!";
   self.restart.appendChild(restartButton);
 
@@ -476,6 +564,7 @@ App.prototype.playerWinsScreen = function() {
     self.playerWins.remove();
     self.buildGame();
   });
+  self.container.appendChild(self.playerWins);
 };
 
 
@@ -486,19 +575,18 @@ App.prototype.dealerWinsScreen = function() {
 
 
   self.winner = document.createElement('div');
-  self.winner.classList.add("winner");
+  self.winner.id = "winner";
   self.dealerWins.appendChild(self.winner);
 
-  var winnerText = document.createElement('h6');
+  self.winnerText = document.createElement('h6');
   self.winnerText.innerText = "DEALER WINS!!!";
-  self.winner.appendChild(winnerText);
+  self.winner.appendChild(self.winnerText);
 
   self.restart = document.createElement('div');
-  self.restart.classList.add("restart-button");
+  self.restart.id = "restart-button";
   self.dealerWins.appendChild(self.restart);
 
   var restartButton = document.createElement('button');
-  restartButton.id = "restart-button";
   restartButton.innerText = "play again!";
   self.restart.appendChild(restartButton);
 
@@ -506,7 +594,41 @@ App.prototype.dealerWinsScreen = function() {
     self.dealerWins.remove();
     self.buildGame();
   });
+  self.container.appendChild(self.dealerWins);
 };
+
+
+App.prototype.tieScreen = function() {
+  var self = this;
+  self.tie = document.createElement('div');
+  self.tie.id = 'player-bust';
+
+
+  self.winner = document.createElement('div');
+  self.winner.id = "TIE!!!";
+  self.pBust.appendChild(self.winner);
+
+  self.winnerText = document.createElement('h6');
+  self.winnerText.innerText = "PLAYER BUST!!!";
+  self.winner.appendChild(self.winnerText);
+
+  self.restart = document.createElement('div');
+  self.restart.id = "restart-button";
+  self.tie.appendChild(self.restart);
+
+  var restartButton = document.createElement('button');
+  restartButton.innerText = "play again!";
+  self.restart.appendChild(restartButton);
+
+  restartButton.addEventListener('click', function() {
+    self.tie.remove();
+    self.buildBet();
+  });
+  self.container.appendChild(self.tie);
+};
+
+
+
 //
 //           // D-BUST screen
 //
